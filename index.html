@@ -117,7 +117,8 @@ textarea{resize:none;height:68px;}
         <label>Art der Erfassung</label>
         <div class="tog">
           <button class="togbtn plus on" id="btnP" onclick="setTyp('plus')">Gehalten</button>
-          <button class="togbtn minus" id="btnU" onclick="setTyp('urlaub')">Urlaub</button>
+          <button class="togbtn minus" id="btnU" onclick="setTyp('urlaub'); if(document.getElementById('btnB'))document.getElementById('btnB').classList.remove('active');">Urlaub</button>
+          <button class="togbtn minus" id="btnB" onclick="setTyp('bildungsurlaub')">Bildungsurlaub</button>
           <button class="togbtn minus" id="btnK" onclick="setTyp('kursausfall')">Kursausfall</button>
         </div>
       </div>
@@ -379,7 +380,7 @@ function saveEntry(){
   var endTime=calcEnd(time,hrs);
   var entry={
     trainer:trainer.name,
-    typ:typ==="plus"?"Gehalten":typ==="urlaub"?"Urlaub":"Kursausfall",
+    typ:typ==="plus"?"Gehalten":typ==="urlaub"?"Urlaub":typ==="bildungsurlaub"?"Bildungsurlaub":"Kursausfall",
     vorzeichen:typ==="plus"?String(hrs):String(-hrs),
     stunden:hrs, kurs:kurs, datum:date,
     von:time, bis:endTime,
@@ -465,7 +466,7 @@ function editE(i){
   document.getElementById("iDate").value=e.datum||"";
   document.getElementById("iTime").value=e.von||"";
   document.getElementById("iNote").value=e.notiz||"";
-  setTyp(e.typ==="Urlaub"?"urlaub":e.typ==="Kursausfall"?"kursausfall":"plus");
+  setTyp(e.typ==="Urlaub"?"urlaub":e.typ==="Bildungsurlaub"?"bildungsurlaub":e.typ==="Kursausfall"?"kursausfall":"plus");
   document.querySelectorAll("#kursPills .pill").forEach(function(p){p.className="pill"+(p.getAttribute("data-k")===e.kurs?" on":"");});
   kurs=e.kurs;
   document.querySelectorAll("#hrPills .pill").forEach(function(p){p.className="pill"+(parseFloat(p.getAttribute("data-h"))===e.stunden?" on":"");});
