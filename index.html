@@ -141,7 +141,7 @@ textarea{resize:none;height:68px;}
         </div>
       </div>
       <div class="fg"><label>Datum</label><input type="date" id="iDate"></div>
-      <div class="fg"><label>Startzeit</label><input type="time" id="iTime"></div>
+      <div class="fg"><label>Startzeit <span style="color:#c4776b">*</span></label><input type="time" id="iTime" required><div id="timeErr" style="font-size:0.75rem;color:#c4776b;margin-top:4px;display:none">Bitte Startzeit angeben — wird fuer den Abgleich benoetigt.</div></div>
       <div class="fg">
         <label>Stunden</label>
         <div class="pills" id="hrPills">
@@ -374,6 +374,8 @@ function saveEntry(){
   var sendEmail=(typ==="minus"&&vert==="absage");
   var sendEmailVertretung=(typ==="minus"&&vert==="gefunden");
   if(!date){alert("Bitte Datum auswaehlen.");return;}
+  if(!time){document.getElementById("timeErr").style.display="block";document.getElementById("iTime").focus();return;}
+  document.getElementById("timeErr").style.display="none";
   var endTime=calcEnd(time,hrs);
   var entry={
     trainer:trainer.name,
